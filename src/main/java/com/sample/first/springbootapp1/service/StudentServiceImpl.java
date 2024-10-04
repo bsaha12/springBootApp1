@@ -10,8 +10,6 @@ import com.sample.first.springbootapp1.exceptions.StudentException;
 import com.sample.first.springbootapp1.model.Student;
 import com.sample.first.springbootapp1.repository.StudentDao;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -30,13 +28,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentByRoll(Integer roll) {
         System.out.println("Roll No : " + roll);
-        Optional<Student> opt =  sDao.findById(roll) ;
-        if(opt.isPresent()){
+        Optional<Student> opt = sDao.findById(roll);
+        if (opt.isPresent()) {
             return opt.get();
         }
 
-        throw new StudentException("Student Not present with roll : " + roll) ;
-
+        throw new StudentException("Student Not present with roll : " + roll);
     }
 
     @Override
@@ -45,15 +42,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Student Student) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateStudent'");
+    public Student updateStudent(Student student) {
+        Optional<Student> opt = sDao.findById(student.getRoll());
+        if (!opt.isPresent()) {
+            throw new StudentException("Student not found");
+        }
+        return sDao.save(student);
     }
 
     @Override
     public Student deleteStudent(Integer roll) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteStudent'");
+        Optional<Student> opt = sDao.findById(roll);
+        if (!opt.isPresent()) {
+            throw new StudentException("Student not found");
+        }
+
+        sDao.deleteById(roll);
+        return opt.get();
     }
 
 }

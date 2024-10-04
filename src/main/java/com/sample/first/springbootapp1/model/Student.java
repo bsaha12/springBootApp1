@@ -17,8 +17,8 @@ import lombok.ToString;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    private Integer roll ;
-    private String name ;
-    private String course ;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer roll;
+    private String name;
+    private String course;
 }

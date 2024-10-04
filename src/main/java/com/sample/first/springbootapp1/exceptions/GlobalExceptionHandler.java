@@ -12,27 +12,26 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(StudentException.class)
-    public ResponseEntity<MyErrorDetails> studentExceptionHandler(StudentException se , WebRequest wr){
+    public ResponseEntity<MyErrorDetails> studentExceptionHandler(StudentException se, WebRequest wr) {
         System.out.println("Inside Student Exception Handler Method");
 
-        MyErrorDetails err = new MyErrorDetails() ;
+        MyErrorDetails err = new MyErrorDetails();
         err.setDescription(wr.getDescription(false));
         err.setMessage(se.getMessage());
-        err.setTimestamp( LocalDateTime.now() );
+        err.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<MyErrorDetails>(err , HttpStatus.BAD_REQUEST) ;
+        return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
     }
 
-
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<MyErrorDetails>  globalExceptionHandler(Exception se , WebRequest wr){
+    public ResponseEntity<MyErrorDetails> globalExceptionHandler(Exception se, WebRequest wr) {
         System.out.println("Inside Global Exception Handler Method");
 
-        MyErrorDetails err = new MyErrorDetails() ;
+        MyErrorDetails err = new MyErrorDetails();
         err.setDescription(wr.getDescription(false));
         err.setMessage(se.getMessage());
-        err.setTimestamp( LocalDateTime.now() );
+        err.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<MyErrorDetails>(err , HttpStatus.BAD_REQUEST) ;
+        return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
     }
 }
