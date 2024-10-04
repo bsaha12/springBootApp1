@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sample.first.springbootapp1.model.Student;
 import com.sample.first.springbootapp1.service.StudentService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/create")
-    public Student createStudentHandler(@RequestBody Student student) {
+    public Student createStudentHandler(@Valid @RequestBody Student student) {
         return sService.createStudent(student);
     }
 
@@ -40,6 +42,13 @@ public class StudentController {
     public Student updateStudentHandler(@RequestBody Student student) {
         return sService.updateStudent(student);
     }
+
+    // @PutMapping("path/{id}")
+    // public String UpdateStudent(@PathVariable String id, @RequestBody String entity) {
+    //     //TODO: process PUT request
+        
+    //     return entity;
+    // }
 
     @DeleteMapping("/student/{id}")
     public Student deleteStudentHandler(@PathVariable("id") Integer roll){
