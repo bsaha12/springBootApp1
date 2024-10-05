@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.first.springbootapp1.model.Student;
+import com.sample.first.springbootapp1.model.StudentDTO;
 import com.sample.first.springbootapp1.service.StudentService;
 
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +27,14 @@ public class StudentController {
     private StudentService sService;
 
     @GetMapping("/student/fetchAll")
-    public List<Student> getAllStudentsHandler() {
-        return sService.getAllStudents();
+    public ResponseEntity<List<Student>> getAllStudentsHandler() {
+        return new ResponseEntity<List<Student>>(sService.getAllStudents() , HttpStatus.OK) ;
     }
 
     @GetMapping("/student/{id}")
-    public Student getStudentByIdHandler(@PathVariable("id") Integer roll) {
-        return sService.getStudentByRoll(roll);
+    public ResponseEntity<Student> getStudentByIdHandler(@PathVariable("id") Integer roll) {
+        Student student =  sService.getStudentByRoll(roll);
+        return new ResponseEntity<Student>(student , HttpStatus.OK);
     }
 
     @PostMapping("/student/create")
@@ -43,16 +47,14 @@ public class StudentController {
         return sService.updateStudent(student);
     }
 
-    // @PutMapping("path/{id}")
-    // public String UpdateStudent(@PathVariable String id, @RequestBody String entity) {
-    //     //TODO: process PUT request
-        
-    //     return entity;
-    // }
-
     @DeleteMapping("/student/{id}")
-    public Student deleteStudentHandler(@PathVariable("id") Integer roll){
+    public Student deleteStudentHandler(@PathVariable("id") Integer roll) {
         return sService.deleteStudent(roll);
+    }
+
+    @GetMapping("/students/fetchMarksAndRoll/{roll}")
+    public StudentDTO fetchMarksAndRollHandler(@PathVariable() Integer roll) {
+        return sService.fetchMarksAndRoll(roll);
     }
 
 }

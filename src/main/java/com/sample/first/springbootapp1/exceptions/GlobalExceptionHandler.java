@@ -37,6 +37,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
     }
 
+    @SuppressWarnings("null")
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<MyErrorDetails> invalidArgumentHandler(MethodArgumentNotValidException mae, WebRequest wr) {
         System.out.println("Inside Invalid Argument Exception Handler Method");
