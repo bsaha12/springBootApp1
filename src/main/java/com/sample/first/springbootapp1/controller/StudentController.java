@@ -28,33 +28,33 @@ public class StudentController {
 
     @GetMapping("/student/fetchAll")
     public ResponseEntity<List<Student>> getAllStudentsHandler() {
-        return new ResponseEntity<List<Student>>(sService.getAllStudents() , HttpStatus.OK) ;
+        return new ResponseEntity<List<Student>>(sService.getAllStudents(), HttpStatus.OK);
     }
 
     @GetMapping("/student/{id}")
     public ResponseEntity<Student> getStudentByIdHandler(@PathVariable("id") Integer roll) {
-        Student student =  sService.getStudentByRoll(roll);
-        return new ResponseEntity<Student>(student , HttpStatus.OK);
+        Student student = sService.getStudentByRoll(roll);
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
 
     @PostMapping("/student/create")
-    public Student createStudentHandler(@Valid @RequestBody Student student) {
-        return sService.createStudent(student);
+    public ResponseEntity<Student> createStudentHandler(@Valid @RequestBody Student student) {
+        return new ResponseEntity<Student>(sService.createStudent(student), HttpStatus.CREATED);
     }
 
     @PutMapping("/student/update")
-    public Student updateStudentHandler(@RequestBody Student student) {
-        return sService.updateStudent(student);
+    public ResponseEntity<Student> updateStudentHandler(@RequestBody Student student) {
+        return new ResponseEntity<Student>(sService.updateStudent(student), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/student/{id}")
-    public Student deleteStudentHandler(@PathVariable("id") Integer roll) {
-        return sService.deleteStudent(roll);
+    public ResponseEntity<Student> deleteStudentHandler(@PathVariable("id") Integer roll) {
+        return new ResponseEntity<Student>(sService.deleteStudent(roll), HttpStatus.OK);
     }
 
     @GetMapping("/students/fetchMarksAndRoll/{roll}")
-    public StudentDTO fetchMarksAndRollHandler(@PathVariable() Integer roll) {
-        return sService.fetchMarksAndRoll(roll);
+    public ResponseEntity<StudentDTO> fetchMarksAndRollHandler(@PathVariable() Integer roll) {
+        return new ResponseEntity<StudentDTO>(sService.fetchMarksAndRoll(roll), HttpStatus.OK);
     }
 
 }
